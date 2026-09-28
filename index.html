@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blip × Nespresso Singapore — Conversational Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blip:#0096FA;--blip-2:#00C2FF;--blip-dim:#0078C8;
+  --bg:#05080F;--bg-2:#0A0F1C;--surface:#11182B;--surface-2:#161E36;
+  --text:#E8EDF7;--dim:#8893A8;--mute:#5D6679;--green:#25D366;--white:#FFFFFF;
+  --client:#C9A46A;--client-2:#E6CB98;
+  --line:rgba(0,150,250,.28);--line-soft:rgba(255,255,255,.08);--line-client:rgba(201,164,106,.18);
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Lexend',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;overflow-x:hidden;
+  background-image:radial-gradient(900px 600px at 85% -10%,rgba(0,150,250,.14),transparent 60%),radial-gradient(700px 500px at -10% 30%,rgba(201,164,106,.07),transparent 60%);background-attachment:fixed}
+.container{max-width:1200px;margin:0 auto;padding:0 32px}
+.accent{background:linear-gradient(90deg,var(--blip),var(--blip-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.accent.c{background:linear-gradient(90deg,var(--client),var(--client-2));-webkit-background-clip:text;background-clip:text}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--blip);margin-bottom:14px}
+/* topbar */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(5,8,15,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
+.topbar .container{display:flex;align-items:center;justify-content:space-between;gap:24px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;white-space:nowrap}
+.brand .b{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--blip),var(--blip-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#04121f}
+.brand .x{color:var(--mute);font-weight:300}.brand .cl{color:var(--client);letter-spacing:.3px}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{background:none;border:1px solid transparent;color:var(--dim);font-family:inherit;font-size:13px;padding:8px 14px;border-radius:10px;cursor:pointer;white-space:nowrap;transition:.2s}
+.tab:hover{color:var(--text)}.tab.active{color:var(--text);background:var(--surface);border-color:var(--line)}
+.panel{display:none}.panel.active{display:block;animation:fade .45s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* generic */
+.hero{padding:88px 0 40px}
+.hero h1{font-size:54px;font-weight:800;line-height:1.05;letter-spacing:-1.8px;max-width:22ch}
+.hero .lead{margin-top:22px;font-size:17px;color:var(--dim);font-weight:300;max-width:64ch}
+.section-title{padding:56px 0 8px}
+.section-title h2{font-size:32px;font-weight:700;letter-spacing:-.9px;line-height:1.15;max-width:28ch}
+.section-title p{margin-top:12px;color:var(--dim);font-weight:300;max-width:70ch}
+.istats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:40px}
+.istat{padding:22px 22px;border-radius:16px;border:1px solid var(--line-soft);background:var(--surface)}
+.istat .n{font-size:34px;font-weight:800;letter-spacing:-1px;color:var(--white)}
+.istat .l{font-family:var(--mono);font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);margin-top:4px}
+.band{margin-top:28px;padding:22px 28px;border-radius:16px;border:1px solid var(--line-client);background:linear-gradient(135deg,rgba(201,164,106,.08),transparent);display:flex;gap:22px;align-items:center}
+.band .k{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--client);white-space:nowrap}
+.band p{font-size:14.5px;font-weight:300}.band b{font-weight:600}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+.col{padding:28px;border-radius:18px;border:1px solid var(--line-soft);background:var(--surface)}
+.col h3{font-size:19px;font-weight:700;letter-spacing:-.3px;margin-bottom:14px}
+.col.cl{border-color:var(--line-client)}.col.bl{border-color:var(--line)}
+.col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.col li{font-size:14px;color:var(--dim);font-weight:300;padding-left:18px;position:relative}
+.col li::before{content:'';position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%;background:var(--blip)}
+.col.cl li::before{background:var(--client)}
+.col li b{color:var(--text);font-weight:600}
+.backers{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;align-items:center}
+.backers .k{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mute);margin-right:6px}
+.chip{font-size:12.5px;padding:7px 13px;border-radius:999px;border:1px solid var(--line-soft);background:var(--surface);color:var(--text)}
+.chip.b{border-color:var(--line);color:var(--blip-2)}
+.tagx{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;padding:2px 7px;border-radius:5px;font-weight:600;vertical-align:middle}
+.tagx.a{background:rgba(0,150,250,.15);color:var(--blip)}
+.tagx.y{background:var(--line-client);color:var(--client)}
+.tagx.h{background:rgba(37,211,102,.14);color:var(--green)}
+.tagx.s{background:rgba(255,255,255,.07);color:var(--dim);border:1px dashed rgba(255,255,255,.18)}
+/* diagnosis */
+.prodgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.prod{padding:24px;border-radius:16px;background:var(--surface);border:1px solid var(--line-soft)}
+.prod .ic{font-size:22px;margin-bottom:10px}
+.prod h4{font-size:16px;font-weight:600;margin-bottom:8px}
+.prod p{font-size:13.5px;color:var(--dim);font-weight:300}
+.how{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.how .k{font-family:var(--mono);font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--blip-2);margin-bottom:8px}
+.how ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.how li{font-size:13px;color:var(--dim);font-weight:300;padding-left:16px;position:relative}
+.how li::before{content:'→';position:absolute;left:0;color:var(--blip)}
+.how li b{color:var(--text);font-weight:500}
+.pilares{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.pil{padding:22px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(160deg,rgba(0,150,250,.08),transparent)}
+.pil .num{font-family:var(--mono);font-size:11px;color:var(--blip);letter-spacing:1.5px}
+.pil h4{font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.pil p{font-size:13px;color:var(--dim);font-weight:300}
+.qa{margin-top:24px;border-radius:18px;border:1px solid var(--line-soft);overflow:hidden}
+.qa .row{display:grid;grid-template-columns:1.1fr 1.6fr 140px;gap:20px;padding:16px 22px;border-top:1px solid var(--line-soft);align-items:start;font-size:13.5px}
+.qa .row:first-child{border-top:none;background:var(--surface-2);font-family:var(--mono);font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--mute)}
+.qa .row .q{font-weight:500}.qa .row .a{color:var(--dim);font-weight:300}
+.st{font-family:var(--mono);font-size:10px;letter-spacing:.8px;text-transform:uppercase;padding:4px 9px;border-radius:6px;display:inline-block}
+.st.ok{background:rgba(37,211,102,.12);color:var(--green)}.st.pd{background:var(--line-client);color:var(--client)}
+/* solution */
+.ucgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.uc{padding:24px;border-radius:16px;background:var(--surface);border:1px solid var(--line-soft);position:relative}
+.uc.v1{border-color:var(--blip);background:linear-gradient(160deg,rgba(0,150,250,.12),var(--surface) 60%);box-shadow:0 0 40px rgba(0,150,250,.12)}
+.uc .ph{font-family:var(--mono);font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--mute);margin-bottom:10px}
+.uc.v1 .ph{color:var(--blip-2)}
+.uc h4{font-size:17px;font-weight:700;margin-bottom:8px;letter-spacing:-.2px}
+.uc p{font-size:13.5px;color:var(--dim);font-weight:300}
+.uc ul{margin-top:12px;list-style:none;display:flex;flex-direction:column;gap:7px}
+.uc li{font-size:13px;color:var(--text);font-weight:300;padding-left:16px;position:relative}
+.uc li::before{content:'→';position:absolute;left:0;color:var(--blip)}
+.start{position:absolute;top:-11px;right:18px;background:linear-gradient(90deg,var(--blip),var(--blip-2));color:#04121f;font-size:11px;font-weight:700;padding:4px 11px;border-radius:999px}
+.agreed{margin-top:22px;padding:24px 28px;border-radius:16px;border:1px solid rgba(37,211,102,.25);background:linear-gradient(135deg,rgba(37,211,102,.06),transparent)}
+.agreed h4{font-size:15px;font-weight:600;margin-bottom:12px}
+.agreed ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px 28px}
+.agreed li{font-size:13.5px;color:var(--dim);font-weight:300;padding-left:22px;position:relative}
+.agreed li::before{content:'✓';position:absolute;left:0;color:var(--green);font-weight:700}
+.agreed li b{color:var(--text);font-weight:600}
+/* journey */
+.segs{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.seg{padding:20px;border-radius:14px;border:1px solid var(--line-soft);background:var(--surface)}
+.seg .t{font-weight:600;font-size:14.5px;margin-bottom:6px}.seg p{font-size:12.5px;color:var(--dim);font-weight:300}
+.journey{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:22px}
+.jstep{padding:16px 14px;border-radius:14px;border:1px solid var(--line);background:var(--surface);position:relative}
+.jstep .n{font-family:var(--mono);font-size:10.5px;color:var(--blip);letter-spacing:1px}
+.jstep .t{font-size:14px;font-weight:600;margin:4px 0}.jstep p{font-size:12px;color:var(--dim);font-weight:300}
+/* mockup */
+.mock-wrap{display:grid;grid-template-columns:400px 1fr;gap:48px;margin-top:34px;align-items:start}
+.phone{width:min(360px,100%);margin:0 auto;border-radius:40px;padding:12px;background:#1a1d24;border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 60px rgba(0,150,250,.08)}
+.phone-screen{position:relative;border-radius:30px;overflow:hidden;height:680px;background:#0B141A;display:flex;flex-direction:column}
+.wa-header{display:flex;align-items:center;gap:10px;padding:14px 14px 12px;background:#1F2C33;flex-shrink:0}
+.wa-header .av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#3b2a1a,#C9A46A);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:15px}
+.wa-header .nm{font-size:14.5px;font-weight:600;color:#E9EDEF;display:flex;align-items:center;gap:5px}
+.wa-header .vf{width:14px;height:14px;border-radius:50%;background:#25D366;color:#0B141A;font-size:9px;display:inline-flex;align-items:center;justify-content:center;font-weight:800}
+.wa-header .sub{font-size:11px;color:#8696A0}
+.wa-body{flex:1;overflow-y:auto;padding:14px 12px 18px;display:flex;flex-direction:column;gap:8px;background:#0B141A;background-image:radial-gradient(rgba(255,255,255,.025) 1px,transparent 1px);background-size:18px 18px;scroll-behavior:smooth}
+.wa-body::-webkit-scrollbar{width:0}
+.daychip{align-self:center;font-size:10.5px;color:#8696A0;background:#1F2C33;padding:4px 10px;border-radius:7px;margin-bottom:4px}
+.msg{max-width:84%;padding:7px 10px 18px;border-radius:9px;font-size:13px;line-height:1.42;color:#E9EDEF;position:relative;display:none}
+.msg.show,.carousel.show,.qr.show{display:block}
+.carousel.show{display:flex}
+.msg.in{align-self:flex-start;background:#1F2C33;border-top-left-radius:2px}
+.msg.out{align-self:flex-end;background:#005C4B;border-top-right-radius:2px}
+.msg .tm{position:absolute;right:8px;bottom:4px;font-size:9.5px;color:rgba(233,237,239,.55)}
+.msg.out .tm::after{content:' ✓✓';color:#53BDEB}
+.msg .tpl{font-family:var(--mono);font-size:9px;letter-spacing:.8px;color:#8696A0;text-transform:uppercase;margin-bottom:4px}
+.msg b{font-weight:600}
+.qr{align-self:flex-start;display:none;width:84%}
+.qr .b{background:#1F2C33;border-radius:9px;text-align:center;padding:9px;color:#53BDEB;font-size:13px;font-weight:500;margin-top:3px}
+.listbtn{border-top:1px solid rgba(255,255,255,.06);margin-top:8px;padding-top:8px;text-align:center;color:#53BDEB;font-size:13px}
+.ctabtn{border-top:1px solid rgba(255,255,255,.06);margin-top:8px;padding-top:8px;text-align:center;color:#53BDEB;font-size:13px}
+.carousel{align-self:flex-start;display:none;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;max-width:100%;padding-bottom:4px}
+.carousel::-webkit-scrollbar{height:0}
+.ccard{flex:0 0 210px;scroll-snap-align:start;background:#1F2C33;border-radius:10px;overflow:hidden}
+.ccard .cimg{height:110px;background:linear-gradient(135deg,#2A3942,#0B141A);display:flex;align-items:center;justify-content:center;font-size:38px}
+.ccard .cb{padding:9px 10px;font-size:12.5px;color:#E9EDEF}
+.ccard .cb small{display:block;color:#8696A0;font-size:11px;margin-top:2px}
+.ccard .cbtn{border-top:1px solid rgba(255,255,255,.06);text-align:center;padding:9px;color:#53BDEB;font-size:12.5px;font-weight:500}
+.mpm-head{display:flex;gap:9px;align-items:center;margin-bottom:6px}
+.mpm-head .th{width:42px;height:42px;border-radius:7px;background:linear-gradient(135deg,#2A3942,#3b2a1a);display:flex;align-items:center;justify-content:center;font-size:20px}
+.pcard{display:flex;align-items:center;gap:9px;padding:7px 0;border-top:1px solid rgba(255,255,255,.05)}
+.pcard .th{width:34px;height:34px;border-radius:6px;background:#2A3942;display:flex;align-items:center;justify-content:center;font-size:16px}
+.pcard .pt{font-size:12.5px}.pcard .pt small{display:block;color:#8696A0;font-size:10.5px}
+.pcard .qty{margin-left:auto;font-size:11px;color:#53BDEB;border:1px solid rgba(83,189,235,.4);border-radius:12px;padding:2px 8px}
+.cartmsg{display:flex;gap:9px;align-items:center}
+.cartmsg .th{width:44px;height:44px;border-radius:7px;background:rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;font-size:20px}
+.paycard{background:rgba(0,0,0,.18);border-radius:7px;padding:8px 9px;margin-top:6px;font-size:12px}
+.paycard .r{display:flex;justify-content:space-between;color:#C9D1D5;padding:2px 0}
+.approved{display:flex;align-items:center;gap:7px;font-weight:600;color:#25D366;margin-bottom:4px}
+.handoff{align-self:center;font-size:10.5px;color:#FFD279;background:rgba(255,210,121,.08);border:1px solid rgba(255,210,121,.2);padding:5px 10px;border-radius:7px;display:none;text-align:center}
+.handoff.show{display:block}
+.wa-input{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0B141A;flex-shrink:0}
+.wa-input .f{flex:1;background:#1F2C33;border-radius:20px;padding:9px 14px;font-size:12.5px;color:#8696A0}
+.wa-input .m{width:36px;height:36px;border-radius:50%;background:#00A884;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px}
+.flow-sheet{position:absolute;inset:auto 0 0 0;height:88%;background:#0B141A;border-radius:18px 18px 0 0;z-index:5;transform:translateY(100%);transition:transform .4s;display:flex;flex-direction:column;box-shadow:0 -10px 40px rgba(0,0,0,.6)}
+.flow-sheet.open{transform:none}
+.flow-sheet .fh{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06);font-weight:600;font-size:14px;color:#E9EDEF;display:flex;justify-content:space-between}
+.flow-sheet .fh span{color:#8696A0;font-weight:400}
+.flow-sheet .fbody{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.flow-sheet .fbody p{font-size:12.5px;color:#C9D1D5}
+.flow-sheet label{font-size:11.5px;color:#8696A0}
+.flow-sheet .fin{background:#1F2C33;border-radius:8px;padding:11px 12px;font-size:13px;color:#E9EDEF;margin-top:4px}
+.flow-sheet .radio{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.flow-sheet .radio div{background:#1F2C33;border-radius:8px;padding:10px 12px;font-size:12.5px;color:#E9EDEF;display:flex;gap:8px;align-items:center}
+.flow-sheet .radio i{width:14px;height:14px;border-radius:50%;border:2px solid #8696A0;display:inline-block}
+.flow-sheet .radio .on i{border-color:#00A884;background:radial-gradient(#00A884 40%,transparent 45%)}
+.flow-sheet .ffoot{padding:12px 16px}
+.flow-sheet .ffoot div{background:#00A884;border-radius:22px;text-align:center;padding:11px;font-weight:600;color:#fff;font-size:13.5px}
+.flow-sheet .fmeta{text-align:center;font-size:10px;color:#8696A0;padding-bottom:10px}
+.mock-side{position:sticky;top:96px}
+.mock-wrap>*{min-width:0}.wa-body>*{min-width:0}.carousel{width:100%}
+.mock-cap{min-height:210px;padding:28px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(160deg,rgba(0,150,250,.08),var(--surface) 70%)}
+.mock-cap .k{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--blip)}
+.mock-cap h4{font-size:22px;font-weight:700;letter-spacing:-.4px;margin:10px 0}
+.mock-cap p{font-size:14.5px;color:var(--dim);font-weight:300}
+.mock-cap .feat{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px}
+.mock-ctrl{display:flex;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+.mbtn{background:var(--surface);border:1px solid var(--line-soft);color:var(--text);font-family:inherit;font-size:13.5px;padding:10px 16px;border-radius:11px;cursor:pointer;transition:.2s}
+.mbtn:hover{border-color:var(--line)}.mbtn.pri{background:linear-gradient(90deg,var(--blip),var(--blip-2));color:#04121f;font-weight:600;border:none}
+.mbtn:disabled{opacity:.35;cursor:default}
+.mock-count{font-family:var(--mono);font-size:12px;color:var(--dim);margin-left:auto}
+.mock-dots{display:flex;gap:6px;margin-top:16px;flex-wrap:wrap}
+.mock-dots span{width:22px;height:4px;border-radius:3px;background:rgba(255,255,255,.1);transition:.3s;cursor:pointer}
+.mock-dots span.on{background:var(--blip)}
+.disclaim{margin-top:14px;font-size:12px;color:var(--mute);font-weight:300}
+/* next steps */
+.fast{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.fcard{padding:24px;border-radius:16px;border:1px solid var(--line-soft);background:var(--surface)}
+.fcard .w{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mute)}
+.fcard h4{font-size:16px;font-weight:600;margin:8px 0 10px}
+.fcard ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.fcard li{font-size:13px;color:var(--dim);font-weight:300;padding-left:14px;position:relative}
+.fcard li::before{content:'·';position:absolute;left:2px;color:var(--blip);font-weight:800}
+.fcard li b{color:var(--text);font-weight:500}
+.gaps{margin-top:22px;border-radius:16px;border:1px dashed rgba(255,255,255,.16);padding:24px 28px}
+.gaps h4{font-size:15px;font-weight:600;margin-bottom:12px}
+.gaps ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px 28px}
+.gaps li{font-size:13.5px;color:var(--dim);font-weight:300}
+.gaps li .tagx{margin-right:8px}
+/* footer */
+.src-line{margin-top:40px;padding:18px 0;border-top:1px solid var(--line-soft);font-size:12px;color:var(--mute);font-weight:300}
+.src-line b{color:var(--dim);font-weight:500}
+.foot{padding:6px 0 40px;font-family:var(--mono);font-size:10.5px;letter-spacing:1px;color:var(--mute);text-transform:uppercase}
+/* ===== Architecture (Annex A) ===== */
+.arch-hero{padding:74px 0 28px}
+.hero-grid{display:grid;grid-template-columns:1.3fr .9fr;gap:54px;align-items:start}
+.hero-grid h1{font-size:42px;font-weight:800;line-height:1.08;letter-spacing:-1.4px}
+.hero-grid p{margin-top:20px;color:var(--dim);font-weight:300;font-size:15.5px;max-width:60ch}
+.hero-meta{border-left:1px solid var(--line-soft);padding-left:28px;display:flex;flex-direction:column;gap:18px}
+.hero-meta .label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.hero-meta .value{display:block;font-size:14px;color:var(--text);font-weight:500}
+.legend{display:flex;gap:28px;margin:22px 0 6px;flex-wrap:wrap}
+.legend .item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dim);font-weight:300}
+.legend .ln{width:30px;height:0;border-top:2px solid}
+.legend .ln.blue{border-color:var(--blip)}.legend .ln.green{border-color:var(--green);border-top-style:dashed}.legend .ln.white{border-color:rgba(255,255,255,.6)}
+.stage{margin:26px 0 14px;padding:42px 38px 46px;border-radius:24px;border:1px solid var(--line-soft);background:linear-gradient(180deg,var(--bg-2),rgba(10,15,28,.4));position:relative;overflow:hidden}
+.stage::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.025) 1px,transparent 1px);background-size:26px 26px;opacity:.6;pointer-events:none}
+.stage>*{position:relative;z-index:1}
+.badge-real{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:6px;background:var(--line-client);color:var(--client);margin-bottom:18px;font-weight:600}
+.band-label{text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-bottom:14px}
+.channel{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.chan-node{display:flex;align-items:center;gap:10px;padding:12px 20px;border-radius:13px;border:1px solid var(--line-soft);background:var(--surface)}
+.chan-node.wa{border-color:rgba(37,211,102,.4);background:linear-gradient(135deg,rgba(37,211,102,.12),rgba(37,211,102,.03))}
+.chan-node .ic{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.chan-node.wa .ic{background:var(--green);color:#04121f;font-weight:800}
+.chan-node .nm{font-size:13.5px;font-weight:500}.chan-node .sub{font-size:10.5px;color:var(--mute);font-family:var(--mono)}
+.vconn{display:flex;flex-direction:column;align-items:center;margin:6px 0}
+.vconn .ll{width:2px;height:30px;background:linear-gradient(180deg,rgba(255,255,255,.5),rgba(0,150,250,.5))}
+.vconn .ar{color:rgba(255,255,255,.6);font-size:13px;margin-top:-6px}
+.hub{margin:0 auto;max-width:820px;border-radius:18px;border:1px solid var(--blip);background:linear-gradient(135deg,rgba(0,150,250,.16),rgba(0,150,250,.04));padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px;box-shadow:0 0 50px rgba(0,150,250,.18)}
+.hub-left{display:flex;align-items:center;gap:16px}
+.hub-mark{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--blip),var(--blip-2));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:19px;color:#04121f;flex-shrink:0}
+.hub-txt .t{font-size:17px;font-weight:700;letter-spacing:-.4px}.hub-txt .s{font-size:12px;color:var(--dim);font-weight:300;margin-top:3px}
+.hub-proto{display:flex;gap:8px;flex-wrap:wrap}
+.hub-proto .p{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:1px;padding:7px 11px;border-radius:8px;background:rgba(0,150,250,.16);color:var(--blip);border:1px solid var(--line)}
+.vconn-split{display:flex;justify-content:space-around;margin:6px 0 14px}
+.vconn-split .ll{width:2px;height:26px;background:linear-gradient(180deg,rgba(0,150,250,.5),rgba(0,150,250,.15))}
+.split{display:grid;grid-template-columns:1fr 128px 1fr;gap:0;align-items:stretch}
+.side{border-radius:18px;padding:22px 20px}
+.side.aqui{border:1px solid var(--line);background:linear-gradient(160deg,rgba(0,150,250,.07),transparent)}
+.side.la{border:1px solid var(--line-client);background:linear-gradient(160deg,rgba(201,164,106,.05),transparent)}
+.side-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.side-head .h{font-size:14px;font-weight:700;letter-spacing:-.2px;max-width:74%}
+.side-head .where{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:6px}
+.side.aqui .where{background:rgba(0,150,250,.14);color:var(--blip)}.side.la .where{background:var(--line-client);color:var(--client)}
+.node{display:flex;align-items:flex-start;gap:11px;padding:12px 13px;border-radius:12px;background:var(--surface);border:1px solid var(--line-soft);margin-bottom:9px;transition:transform .25s,border-color .25s}
+.node:last-child{margin-bottom:0}.node:hover{transform:translateX(3px);border-color:var(--line)}
+.node .dot{width:9px;height:9px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.side.aqui .node .dot{background:var(--blip);box-shadow:0 0 10px rgba(0,150,250,.6)}
+.side.la .node .dot{background:var(--client);box-shadow:0 0 10px var(--client)}
+.side.la .node.human .dot{background:var(--green);box-shadow:0 0 10px rgba(37,211,102,.5)}
+.node .nbody{flex:1}
+.node .nt{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;margin-bottom:3px;flex-wrap:wrap}
+.node .nd{font-size:11.5px;color:var(--dim);font-weight:300;line-height:1.4}
+.bridge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:0 6px}
+.flow{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%}
+.flow .proto{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:1px;padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--blip);white-space:nowrap}
+.flow .proto.mcp{color:var(--green);border-color:rgba(37,211,102,.3)}
+.arrows{display:flex;flex-direction:column;align-items:center;gap:3px;width:100%}
+.arr-line{position:relative;width:100%;height:2px;background:repeating-linear-gradient(90deg,var(--blip) 0 8px,transparent 8px 14px);animation:dash 1s linear infinite}
+.arr-line.g{background:repeating-linear-gradient(90deg,var(--green) 0 8px,transparent 8px 14px)}
+@keyframes dash{to{background-position:14px 0}}
+.arr-bi{font-size:12px;color:var(--blip);letter-spacing:-2px}.arr-bi.g{color:var(--green)}
+.bridge-note{font-size:10.5px;color:var(--mute);text-align:center;font-weight:300;line-height:1.4;max-width:116px}
+.principle{margin-top:20px;padding:22px 28px;border-radius:16px;display:flex;align-items:center;gap:18px}
+.principle.hybrid{border:1px solid var(--line-client);background:linear-gradient(135deg,rgba(201,164,106,.06),transparent)}
+.principle.guard{border:1px solid rgba(37,211,102,.25);background:linear-gradient(135deg,rgba(37,211,102,.05),transparent)}
+.principle .q{font-size:28px;font-weight:800;line-height:1}
+.principle.hybrid .q{color:var(--client)}.principle.guard .q{color:var(--green)}
+.principle .pt{font-size:15px;font-weight:300;color:var(--text);line-height:1.5}.principle .pt b{font-weight:700}
+.meta-foot{margin-top:18px;padding:24px 30px;border-radius:16px;border:1px solid var(--line-soft);background:var(--surface);display:grid;grid-template-columns:repeat(2,1fr);gap:13px 40px}
+.meta-foot .row{font-size:13px;color:var(--dim);font-weight:300}
+.meta-foot .row .k{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--blip);margin-right:8px}
+.meta-foot .row .k.y{color:var(--client)}
+/* responsive */
+@media(max-width:900px){
+  .container{padding:0 16px}
+  .topbar .container{height:auto;flex-direction:column;align-items:stretch;gap:8px;padding-top:10px;padding-bottom:8px}
+  .tabs{overflow-x:auto}
+  .hero{padding:48px 0 24px}.hero h1{font-size:34px;letter-spacing:-1px}
+  .section-title h2{font-size:25px}
+  .istats,.pilares,.segs{grid-template-columns:repeat(2,1fr)}
+  .mock-wrap{grid-template-columns:minmax(0,1fr)}
+  .two,.prodgrid,.ucgrid,.agreed ul,.gaps ul,.fast{grid-template-columns:1fr}
+  .journey{grid-template-columns:repeat(2,1fr)}
+  .band{flex-direction:column;align-items:flex-start;gap:8px}
+  .qa .row{grid-template-columns:1fr;gap:6px}.qa .row:first-child{display:none}
+  .mock-side{position:static}.phone-screen{height:600px}
+  .istat .n{font-size:26px}
+  .hero-grid,.split{grid-template-columns:1fr}.hero-grid h1{font-size:32px}.hero-meta{border-left:none;padding-left:0}
+  .stage{padding:24px 16px}.hub{flex-direction:column;align-items:flex-start}
+  .bridge{flex-direction:row;padding:16px 0}.bridge-note{max-width:none}
+  .vconn-split{display:none}.meta-foot{grid-template-columns:1fr;padding:20px}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="container">
+    <div class="brand"><div class="b">b</div>Blip <span class="x">×</span> <span class="cl">Nespresso Singapore</span></div>
+    <nav class="tabs">
+      <button class="tab active" data-tab="vision">Vision</button>
+      <button class="tab" data-tab="diag">Diagnosis</button>
+      <button class="tab" data-tab="sol">Solution</button>
+      <button class="tab" data-tab="journey">Journey</button>
+      <button class="tab" data-tab="arch">Architecture</button>
+      <button class="tab" data-tab="next">Next steps</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= VISION ================= -->
+<div class="panel active" id="panel-vision">
+  <section class="container hero">
+    <div class="eyebrow">Conversational Roadmap · September 2026</div>
+    <h1>WhatsApp in Singapore: <span class="accent">one conversation for the whole coffee journey.</span></h1>
+    <p class="lead">Nespresso Brazil already runs commerce, care and campaigns on WhatsApp with Blip. We propose to bring that proven blueprint to Singapore — localised, connected to your systems and orchestrated with AI.</p>
+    <div class="eyebrow" style="margin-top:44px;margin-bottom:0">About Blip</div>
+    <div class="istats" style="margin-top:14px">
+      <div class="istat"><div class="n">+400M</div><div class="l">messages per month</div></div>
+      <div class="istat"><div class="n">+28M</div><div class="l">sessions per month</div></div>
+      <div class="istat"><div class="n">35</div><div class="l">countries</div></div>
+      <div class="istat"><div class="n">+4k</div><div class="l">clients · 300 of the 500 largest companies</div></div>
+    </div>
+    <div class="band">
+      <div class="k">Blip × Nespresso today</div>
+      <p><b>Nespresso Brazil runs its full customer journey on Blip</b> — Commerce · Care · Campaigns, operated end to end with a dedicated Professional Services squad (developers and conversational designers) and weekly governance with the CRC. Singapore asked to reuse <b>the same ecosystem</b>.</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="two">
+      <div class="col cl">
+        <div class="eyebrow" style="color:var(--client)">The moment of Nespresso Singapore</div>
+        <h3>A channel ready to do much more</h3>
+        <ul>
+          <li>WhatsApp is <b>not yet an official Nespresso channel in Singapore</b> — the team is working with Meta to implement it and wants to reuse the Brazil ecosystem.</li>
+          <li>About <b>half of sales happen on the website</b>; email marketing, SMS, media and boutiques are the other official touchpoints.</li>
+          <li>The ambition is broader: <b>promotions, cart recovery, engagement</b> and steering behaviour — not only selling through WhatsApp.</li>
+          <li>Singapore first, with <b>Malaysia and Thailand</b> under evaluation for the same regional team.</li>
+          <li>The open question is not the front end — it is <b>how the back end connects</b>: ERP, Nessoft, carriers and the agent desk.</li>
+        </ul>
+      </div>
+      <div class="col bl">
+        <div class="eyebrow">Why Blip</div>
+        <h3>Messaging is the new browser. AI agents are the new engine.</h3>
+        <ul>
+          <li><b>Orchestration layer</b> between your systems, your people and the customer's WhatsApp — the brand's Intelligent Contact.</li>
+          <li><b>From pilot to ROI:</b> 95% of enterprise gen-AI pilots created no real business impact. Our AI Transformation Journey goes from digitalisation to automated flows and business outcomes.</li>
+          <li><b>Already proven at Nespresso:</b> the Brazil blueprint was built global-ready — modular skills and architecture prepared for local API integration.</li>
+          <li><b>Global operation:</b> Global Accounts Center of Excellence, 24/7 multilingual support for strategic accounts, Asia supported from Madrid.</li>
+          <li><b>Already in Singapore:</b> Dell expanded with Blip from Brazil to Singapore, Malaysia, India and more in 2021.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="backers">
+      <span class="k">Recognition & backing</span>
+      <span class="chip b">Click-to-WhatsApp Most Relevant Player 2025 · 2026</span>
+      <span class="chip">Finance Best-in-class</span>
+      <span class="chip">Use Case Maker 2024</span>
+      <span class="chip">Revenue Growth Spotlight 2023 & 2024</span>
+      <span class="chip">Meta Premium Partner since 2016</span>
+      <span class="chip">Series A $100M · Series B $70M · Series C $60M</span>
+    </div>
+    <div class="src-line"><b>Sources:</b> "Sobre a Blip" deck (big numbers, awards, 95% pilots, AI Transformation Journey); "Conversational Excellence for Nespresso Singapore" deck, Jul/2026 (Brazil blueprint, Dell case, Global Accounts, funding); discovery call with Thais Calabretta, 01/07/2026; discovery call and demo with the SG team, Sep/2026.</div>
+    <div class="foot">Blip × Nespresso Singapore — supporting material · Classification: Confidential</div>
+  </section>
+</div>
+
+<!-- ================= DIAGNOSIS ================= -->
+<div class="panel" id="panel-diag">
+  <section class="container section-title">
+    <div class="eyebrow">Diagnosis</div>
+    <h2>Where Singapore starts, and <span class="accent">what we have already aligned.</span></h2>
+    <p>WhatsApp is not yet an official Nespresso channel in Singapore. The team is working with Meta to launch it and wants the same ecosystem as Brazil. This is what we have aligned since July.</p>
+  </section>
+  <section class="container">
+    <div class="section-title" style="padding-top:20px"><div class="eyebrow">Already validated</div><h2 style="font-size:24px">What we have aligned so far</h2></div>
+    <div class="pilares">
+      <div class="pil"><div class="num">01</div><h4>Brazil as the reference</h4><p>The team wants to replicate the Brazil journey — adapting and improving, not copying: Brazil is already adding in-conversation payment links and updated catalogs.</p></div>
+      <div class="pil"><div class="num">02</div><h4>Hybrid bot + AI agent</h4><p>Nespresso has just cleared the use of AI in the bot. The model shown: guided click journeys plus specialised AI agents.</p></div>
+      <div class="pil"><div class="num">03</div><h4>Campaigns from your systems</h4><p>Outbound can run from the Blip platform or be triggered by API from Nespresso systems — both models already live in Brazil.</p></div>
+      <div class="pil"><div class="num">04</div><h4>Priorities</h4><p>CRC (support) and Marketing first; Machine Support next; Loyalty later. Scope in discussion: capsule purchase, order tracking, machine support.</p></div>
+    </div>
+
+    <div class="section-title" style="padding-top:44px"><div class="eyebrow">Questions raised by the Singapore team</div><h2 style="font-size:24px">Where each answer stands</h2></div>
+    <div class="qa">
+      <div class="row"><div>Question</div><div>Our answer so far</div><div>Status</div></div>
+      <div class="row"><div class="q">Support team in Asia?</div><div class="a">Global team; Asia support is based in Madrid. Timezone coverage to be designed with the team.</div><div><span class="st ok">Answered</span></div></div>
+      <div class="row"><div class="q">Set-up and recurring cost?</div><div class="a">Structure: one-time set-up + platform minimum + per-conversation, plus a dedicated expert team. Values after scope and audience are defined.</div><div><span class="st pd">After scope</span></div></div>
+      <div class="row"><div class="q">Integration with Braze?</div><div class="a">Yes — Blip integrates with Braze, so campaigns and audiences managed in Braze can reach consumers on WhatsApp through Blip.</div><div><span class="st ok">Answered</span></div></div>
+      <div class="row"><div class="q">How is the journey designed?</div><div class="a">Co-designed with Blip conversational strategy specialists; mostly adaptation of the Brazil journeys to optimise time and investment.</div><div><span class="st ok">Answered</span></div></div>
+      <div class="row"><div class="q">Time to go-live?</div><div class="a">From ~2 weeks to ~3 months depending on integrations and customisation. Target: next fiscal year.</div><div><span class="st pd">After scope</span></div></div>
+      <div class="row"><div class="q">Who runs campaigns and creatives?</div><div class="a">Execution and creatives stay with Nespresso; Blip PS supports with templates, best practices, testing and optimisation.</div><div><span class="st ok">Answered</span></div></div>
+      <div class="row"><div class="q">Handoff to the agent desk?</div><div class="a">Handoff to the Genesys-based agent queue; which data flows from Blip to the desk is being checked by the Blip technical team.</div><div><span class="st pd">To validate</span></div></div>
+    </div>
+    <div class="src-line"><b>Sources:</b> call with Thais Calabretta, 01/07/2026; email "Prep. para a próxima reunião com a Blip" (18/09/2026) and Blip's reply; discovery call notes, Sep/2026; WhatsApp Demo – Blip, 24/09/2026 (meeting record); email from the SG team to Nespresso Brazil on Nessoft integration (22/09/2026).</div>
+    <div class="foot">Blip × Nespresso Singapore — supporting material · Classification: Confidential</div>
+  </section>
+</div>
+
+<!-- ================= SOLUTION ================= -->
+<div class="panel" id="panel-sol">
+  <section class="container section-title">
+    <div class="eyebrow">Solution · use cases</div>
+    <h2>The Brazil menu, <span class="accent">phased for Singapore.</span></h2>
+    <p>Two ways to get there — the choice mostly depends on how much of the Nespresso Brazil journey can be reused as it is.</p>
+  </section>
+  <section class="container">
+    <div class="two" style="margin-top:8px">
+      <div class="col bl"><div class="eyebrow">Path A · Replicate Brazil</div><h3>Copy the Brazil flows, localise and go live</h3><p style="font-size:14px;color:var(--dim);font-weight:300">If Singapore can reuse the Nespresso Brazil flows as they are — adapting language, catalog and local integrations — <b style="color:var(--text);font-weight:600">implementation effort and time to go-live are significantly lower</b>, since the journeys, design and logic are already proven in production.</p></div>
+      <div class="col cl"><div class="eyebrow" style="color:var(--client)">Path B · Phased build</div><h3>If a direct copy is not possible</h3><p style="font-size:14px;color:var(--dim);font-weight:300">When local systems, processes or priorities require a different design, we suggest the <b style="color:var(--text);font-weight:600">phased approach below</b>: start where the value is clearest and the integrations are lightest, then expand as systems connect.</p></div>
+    </div>
+    <div class="section-title" style="padding-top:40px"><div class="eyebrow">Suggested phasing · Path B</div><h2 style="font-size:24px">v1 → v2 → v3</h2></div>
+    <div class="ucgrid">
+      <div class="uc v1"><span class="start">Start here</span><div class="ph">v1 · Commerce</div><h4>Buy Capsules</h4><p>End-to-end capsule purchase in the conversation.</p><ul><li>Original and Vertuo collections</li><li>Discovery by intensity, range, limited editions</li><li>Cart, delivery details, secure payment link</li><li>Repurchase reminders</li></ul></div>
+      <div class="uc v1"><span class="start">Start here</span><div class="ph">v1 · Care</div><h4>Customer & Machine Support</h4><p>Launch the channel answering what consumers already ask the CRC.</p><ul><li>Central FAQ: orders, payments, subscriptions</li><li>Model-specific troubleshooting and descaling tutorials</li><li>Context-aware handoff to the agent desk (Genesys)</li><li>Post-interaction satisfaction survey</li></ul></div>
+      <div class="uc v1"><span class="start">Start here</span><div class="ph">v1 · Marketing</div><h4>Promotions & Campaigns</h4><p>Proactive, governed messaging to opted-in consumers.</p><ul><li>Seasonal and always-on campaigns</li><li>Vouchers and promotional credits</li><li>Sent from Blip or triggered by API from Nespresso systems</li></ul></div>
+      <div class="uc"><div class="ph">v2 · Fulfilment</div><h4>Order Tracking</h4><p>Real-time order lookup and status updates — depends on the direct carrier integration now under way.</p></div>
+      <div class="uc"><div class="ph">v2 · Care</div><h4>Repair Pickup</h4><p>Warranty check, pickup scheduling, case creation and repair tracking.</p></div>
+      <div class="uc"><div class="ph">v2 · Commerce</div><h4>Buy Machines · Boutiques · Recycling</h4><p>Guided machine comparison and registration, boutique locator, recycling points and bag requests.</p></div>
+      <div class="uc"><div class="ph">v2 · Region</div><h4>Malaysia & Thailand</h4><p>Reuse the Singapore build for the next markets once audience and channel coverage are confirmed. <span class="tagx s">to validate</span></p></div>
+      <div class="uc"><div class="ph">v3 · Intelligence</div><h4>AI agents at scale</h4><p>Specialised agents per domain, behavioural segmentation, repurchase-window targeting and continuous optimisation.</p></div>
+      <div class="uc"><div class="ph">v3 · Relationship</div><h4>Loyalty</h4><p>Named by the team as a later priority — to be scoped once the core journeys are live.</p></div>
+    </div>
+
+    <div class="agreed">
+      <h4>Agreed at the demo (24/09/2026)</h4>
+      <ul>
+        <li><b>Nespresso SG</b> meets the Nespresso Brazil team to define scope and target markets.</li>
+        <li><b>Nespresso SG</b> proposes a 30-minute follow-up with Blip after that meeting.</li>
+        <li><b>Blip</b> sends an updated deck of services and solutions to choose from.</li>
+        <li><b>Blip</b> confirms the WhatsApp community size limit, in writing.</li>
+      </ul>
+    </div>
+    <div class="src-line"><b>Sources:</b> "Conversational Excellence for Nespresso Singapore" deck, Jul/2026 (Brazil menu and journeys); discovery call notes, Sep/2026 (priorities, carriers); WhatsApp Demo – Blip, 24/09/2026 (scope in discussion, action items); call with Thais Calabretta, 01/07/2026 (markets).</div>
+    <div class="foot">Blip × Nespresso Singapore — supporting material · Classification: Confidential</div>
+  </section>
+</div>
+
+<!-- ================= JOURNEY ================= -->
+<div class="panel" id="panel-journey">
+  <section class="container section-title">
+    <div class="eyebrow">Journey · Buy Capsules</div>
+    <h2>Feel it: <span class="accent">from "hi" to a confirmed order</span>, without leaving WhatsApp.</h2>
+    <p>The consumer can arrive from any of the touchpoints Nespresso Singapore already uses. The conversation then takes them through the Brazil-proven capsule journey.</p>
+  </section>
+  <section class="container">
+    <div class="segs">
+      <div class="seg"><div class="t">🌐 Website</div><p>Around half of sales — a WhatsApp entry point for help while buying.</p></div>
+      <div class="seg"><div class="t">✉️ Email & SMS</div><p>Existing campaigns can point to the WhatsApp conversation.</p></div>
+      <div class="seg"><div class="t">🏬 Boutiques</div><p>QR codes and staff referrals to continue the relationship.</p></div>
+      <div class="seg"><div class="t">📣 Media</div><p>Paid media with Click-to-WhatsApp ads.</p></div>
+    </div>
+    <div class="journey">
+      <div class="jstep"><div class="n">01</div><div class="t">Start</div><p>Menu with the full journey</p></div>
+      <div class="jstep"><div class="n">02</div><div class="t">Choose</div><p>Original or Vertuo</p></div>
+      <div class="jstep"><div class="n">03</div><div class="t">Discover</div><p>Ranges and limited editions</p></div>
+      <div class="jstep"><div class="n">04</div><div class="t">Cart</div><p>Catalog and order</p></div>
+      <div class="jstep"><div class="n">05</div><div class="t">Deliver & pay</div><p>Flow + payment link</p></div>
+      <div class="jstep"><div class="n">06</div><div class="t">Confirm & care</div><p>Updates and human handoff</p></div>
+    </div>
+
+    <div class="mock-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="wa-header">
+            <div class="av">N</div>
+            <div><div class="nm">Nespresso <span class="vf">✔</span></div><div class="sub">Official business account</div></div>
+          </div>
+          <div class="wa-body" id="waBody">
+            <div class="daychip">Today</div>
+            <div class="msg out" data-step="1">Hi! I'd like to order some capsules ☕<span class="tm">10:02</span></div>
+            <div class="msg in" data-step="2">Hi Mei! Welcome back to Nespresso 👋<br>How can we help you today?<div class="listbtn">☰ See options</div><span class="tm">10:02</span></div>
+            <div class="msg out" data-step="3">Buy Capsules<span class="tm">10:02</span></div>
+            <div class="msg in" data-step="4">Great choice! Which system is your machine?<span class="tm">10:02</span></div>
+            <div class="qr" data-step="4"><div class="b">Original</div><div class="b">Vertuo</div><div class="b">Help me choose</div></div>
+            <div class="msg out" data-step="5">Vertuo<span class="tm">10:03</span></div>
+            <div class="msg in" data-step="6">Here are some Vertuo favourites. Swipe to explore 👉<span class="tm">10:03</span></div>
+            <div class="carousel" data-step="6">
+              <div class="ccard"><div class="cimg">🥛</div><div class="cb">Barista Creations<small>Made to pair with milk</small></div><div class="cbtn">View coffees</div></div>
+              <div class="ccard"><div class="cimg">🌍</div><div class="cb">Master Origins<small>Single-origin coffees</small></div><div class="cbtn">View coffees</div></div>
+              <div class="ccard"><div class="cimg">✨</div><div class="cb">Limited Editions<small>Seasonal releases</small></div><div class="cbtn">View coffees</div></div>
+              <div class="ccard"><div class="cimg">🎚️</div><div class="cb">Find by intensity<small>Mild to intense</small></div><div class="cbtn">Start</div></div>
+            </div>
+            <div class="msg out" data-step="7">View coffees · Barista Creations<span class="tm">10:04</span></div>
+            <div class="msg in" data-step="8">
+              <div class="mpm-head"><div class="th">☕</div><div><b>Barista Creations · Vertuo</b><br><span style="color:#8696A0;font-size:11px">Nespresso catalog</span></div></div>
+              <div class="pcard"><div class="th">🍮</div><div class="pt">Caramel flavour<small>Sleeve of 10</small></div><div class="qty">+ Add</div></div>
+              <div class="pcard"><div class="th">🌼</div><div class="pt">Vanilla flavour<small>Sleeve of 10</small></div><div class="qty">+ Add</div></div>
+              <div class="pcard"><div class="th">🍫</div><div class="pt">Dark roast for milk<small>Sleeve of 10</small></div><div class="qty">+ Add</div></div>
+              <div class="listbtn">View items</div><span class="tm">10:04</span></div>
+            <div class="msg out" data-step="9"><div class="cartmsg"><div class="th">🛒</div><div><b>3 items</b><br><span style="font-size:11.5px;opacity:.8">View sent cart</span></div></div><span class="tm">10:06</span></div>
+            <div class="msg in" data-step="10">Thanks! Just a few details for delivery 📦<div class="ctabtn">Add delivery details</div><span class="tm">10:06</span></div>
+            <div class="msg in" data-step="11"><b>Your order is ready</b>
+              <div class="paycard"><div class="r"><span>Barista Creations · 3 sleeves</span><span>✓</span></div><div class="r"><span>Delivery</span><span>Home · selected date</span></div></div>
+              <div style="margin-top:6px">Tap below to pay securely. You'll get the confirmation right here.</div>
+              <div class="ctabtn">🔒 Pay securely</div><span class="tm">10:07</span></div>
+            <div class="msg in" data-step="12"><div class="approved">✅ Payment confirmed</div>Your order is confirmed! We'll send delivery updates in this chat. Want a reminder when it's time to reorder?<span class="tm">10:09</span></div>
+            <div class="qr" data-step="12"><div class="b">Yes, remind me</div><div class="b">Track my order</div></div>
+            <div class="msg out" data-step="13">Also, my machine is making a strange noise 😕<span class="tm">10:10</span></div>
+            <div class="handoff" data-step="13">Connecting you to a Nespresso Coffee Specialist</div>
+            <div class="msg in" data-step="13">Hi Mei, I'm Daniel from Nespresso 👋 I can see your Vertuo and today's order. Let's check the noise together — could you send a short video?<span class="tm">10:11</span></div>
+          </div>
+          <div class="wa-input"><div class="f">Message</div><div class="m">🎤</div></div>
+
+          <div class="flow-sheet" data-open="10">
+            <div class="fh">Delivery details <span>✕</span></div>
+            <div class="fbody">
+              <p>We'll deliver your capsules to the address below.</p>
+              <div><label>Full name</label><div class="fin">Mei Tan</div></div>
+              <div><label>Postal code</label><div class="fin">486035</div></div>
+              <div><label>Address</label><div class="fin">Block, street, unit number</div></div>
+              <div><label>Delivery option</label>
+                <div class="radio"><div class="on"><i></i>Home delivery</div><div><i></i>Pick up at a boutique</div></div></div>
+              <div><label>Preferred delivery date</label><div class="fin">📅 Choose a date</div></div>
+            </div>
+            <div class="ffoot"><div>Confirm details</div></div>
+            <div class="fmeta">Managed by Nespresso · WhatsApp Flows</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mock-side">
+        <div class="mock-cap" id="mockCap"></div>
+        <div class="mock-ctrl">
+          <button class="mbtn" id="mPrev">‹ Previous</button>
+          <button class="mbtn pri" id="mNext">Next ›</button>
+          <button class="mbtn" id="mReset">↻ Restart</button>
+          <span class="mock-count" id="mCount"></span>
+        </div>
+        <div class="mock-dots" id="mDots"></div>
+        <p class="disclaim">Illustrative simulation built only with native WhatsApp Business components. Product names, customer data and delivery options are placeholders; the payment method and catalog set-up in Singapore are to be validated.</p>
+      </div>
+    </div>
+    <div class="src-line"><b>Sources:</b> Nespresso Brazil journey (deck "Conversational Excellence for Nespresso Singapore", Jul/2026, and live demo of the Brazil bot, Sep/2026 — menu, Original/Vertuo, ranges, cart, payment link, planned in-conversation payment improvements); SG touchpoints from the call of 01/07/2026; handoff to Genesys from the demo of 24/09/2026.</div>
+    <div class="foot">Blip × Nespresso Singapore — supporting material · Classification: Confidential</div>
+  </section>
+</div>
+
+<!-- ================= ARCHITECTURE ================= -->
+<div class="panel" id="panel-arch">
+  <section class="container arch-hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Hybrid orchestration architecture</div>
+        <h1>Conversational systems here and there,<br><span class="accent">talking to each other.</span></h1>
+        <p>Blip orchestrates the journey and the channels; Nespresso's intelligence, people and systems stay inside Nespresso — connected through open protocols (A2A and MCP), with the most suitable LLM for each agent. The Singapore design will be confirmed in discovery.</p>
+      </div>
+      <div class="hero-meta">
+        <div><span class="label">Orchestrator (journey + channels)</span><span class="value">Blip Studio · Multi-agent · A2A · LLM-agnostic</span></div>
+        <div><span class="label">Scale agents (Blip)</span><span class="value">Commerce · Care · Campaigns</span></div>
+        <div><span class="label">Intelligence & people (Nespresso)</span><span class="value">Coffee Specialists · ERP · Nessoft · Carriers · Braze</span></div>
+        <div><span class="label">Channels</span><span class="value">WhatsApp · WhatsApp Flows · Campaigns · Click-to-WhatsApp</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container section-title">
+    <div class="eyebrow">One page · two sides · one orchestrator</div>
+    <h2>The hybrid model — designed for Nespresso Singapore.</h2>
+    <p>Blip Studio receives the conversation on WhatsApp and routes it, agent by agent, to the intelligence and systems Nespresso already runs — returning context and signals to enrich them in real time.</p>
+    <div class="legend">
+      <div class="item"><span class="ln blue"></span> Agent-to-agent orchestration (A2A)</div>
+      <div class="item"><span class="ln green"></span> Context, data and tools via MCP</div>
+      <div class="item"><span class="ln white"></span> Outbound channel to the consumer</div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="stage">
+      <div class="badge-real">Proposed architecture · Nespresso Singapore</div>
+      <div class="band-label">Where the consumer is</div>
+      <div class="channel">
+        <div class="chan-node wa"><div class="ic">W</div><div><div class="nm">WhatsApp</div><div class="sub">primary channel</div></div></div>
+        <div class="chan-node"><div class="ic" style="background:rgba(0,150,250,.2);color:var(--blip)">⚡</div><div><div class="nm">WhatsApp Flows</div><div class="sub">forms & checkout steps</div></div></div>
+        <div class="chan-node"><div class="ic" style="background:rgba(0,150,250,.2);color:var(--blip)">📣</div><div><div class="nm">Campaigns</div><div class="sub">Blip or via API</div></div></div>
+        <div class="chan-node"><div class="ic" style="background:rgba(0,150,250,.2);color:var(--blip)">↗</div><div><div class="nm">Click-to-WhatsApp</div><div class="sub">media → conversation</div></div></div>
+      </div>
+      <div class="vconn"><div class="ll"></div><div class="ar">▼</div></div>
+      <div class="hub">
+        <div class="hub-left">
+          <div class="hub-mark">b</div>
+          <div class="hub-txt"><div class="t">Blip Studio — Journey and channel orchestrator</div><div class="s">Receives the conversation, identifies intent and routes it to the right agent — on each side — with the LLM that makes the most sense for each task (OpenAI, Anthropic, Google, Meta Llama, Azure or Nespresso's own model).</div></div>
+        </div>
+        <div class="hub-proto"><span class="p">MULTI-AGENT</span><span class="p">A2A</span><span class="p">MCP</span><span class="p">LLM-AGNOSTIC</span></div>
+      </div>
+      <div class="vconn-split"><div class="ll"></div><div class="ll"></div></div>
+      <div class="split">
+        <div class="side aqui">
+          <div class="side-head"><div class="h">Blip layer — scale agents</div><div class="where">Here</div></div>
+          <div class="node"><div class="dot"></div><div class="nbody"><div class="nt">Commerce agent <span class="tagx a">agent</span></div><div class="nd">Capsule and machine discovery, cart, delivery details and payment link — the Buy Capsules journey.</div></div></div>
+          <div class="node"><div class="dot"></div><div class="nbody"><div class="nt">Care agent <span class="tagx a">agent</span></div><div class="nd">FAQ, machine troubleshooting and tutorials; hands over with full context when a specialist is needed.</div></div></div>
+          <div class="node"><div class="dot"></div><div class="nbody"><div class="nt">Campaigns (Blip Growth) <span class="tagx a">agent</span></div><div class="nd">Governed templates, audiences and proactive messages — sent from Blip or triggered by Nespresso systems via API.</div></div></div>
+          <div class="node"><div class="dot"></div><div class="nbody"><div class="nt">Governance, style guide & cockpit <span class="tagx a">orchestrates</span></div><div class="nd">One Nespresso voice across markets and a unified view of the journey and satisfaction.</div></div></div>
+        </div>
+        <div class="bridge">
+          <div class="flow"><div class="proto">A2A</div><div class="arrows"><div class="arr-bi">◄────►</div><div class="arr-line"></div></div></div>
+          <div class="bridge-note">agents talk<br>to agents</div>
+          <div class="flow"><div class="proto mcp">MCP</div><div class="arrows"><div class="arr-line g"></div><div class="arr-bi g">◄────►</div></div></div>
+          <div class="bridge-note">context, data<br>and tools</div>
+        </div>
+        <div class="side la">
+          <div class="side-head"><div class="h">Nespresso Singapore internal infrastructure</div><div class="where">There</div></div>
+          <div class="node human"><div class="dot"></div><div class="nbody"><div class="nt">Coffee Specialists / CRC <span class="tagx h">human</span></div><div class="nd">Agent queue on Genesys; data passed from Blip to the desk being validated.</div></div></div>
+          <div class="node"><div class="dot"></div><div class="nbody"><div class="nt">ERP & Nessoft <span class="tagx s">system</span></div><div class="nd">Orders, stock and customer records — named as the most important integration.</div></div></div>
+          <div class="node"><div class="dot"></div><div class="nbody"><div class="nt">Carriers <span class="tagx s">system</span></div><div class="nd">Direct integration with delivery partners in progress, for real-time tracking.</div></div></div>
+          <div class="node"><div class="dot"></div><div class="nbody"><div class="nt">Braze & Nestlé Engage <span class="tagx s">system</span></div><div class="nd">Marketing communications and campaign triggers — Braze integrates with Blip.</div></div></div>
+          <div class="node"><div class="dot"></div><div class="nbody"><div class="nt">Payments & e-commerce <span class="tagx s">system</span></div><div class="nd">Local payment provider and catalog — to be mapped in discovery.</div></div></div>
+        </div>
+      </div>
+      <div class="principle hybrid">
+        <div class="q">“</div>
+        <div class="pt">Blip orchestrates the journey and the channels. <b>Intelligence, people and systems stay inside Nespresso.</b> Scale the conversation without giving up control — and without LLM lock-in.</div>
+      </div>
+      <div class="principle guard">
+        <div class="q">⛨</div>
+        <div class="pt"><b>Guardrail:</b> AI works as a layer of scale and quality — Coffee Specialists remain essential in consultative moments. Technology extends the team, it does not replace it.</div>
+      </div>
+    </div>
+    <div class="meta-foot">
+      <div class="row"><span class="k">Built on</span> Blip Studio · Multi-agent · A2A · MCP</div>
+      <div class="row"><span class="k y">Principle</span> Orchestrate, don't replace — intelligence and people stay at Nespresso</div>
+      <div class="row"><span class="k">Blue arrows</span> A2A: Blip agents ⇄ Nespresso agents and desk</div>
+      <div class="row"><span class="k y">Green arrows</span> MCP: signals, data and tools as context</div>
+      <div class="row"><span class="k">Models</span> LLM-agnostic · the right model per agent, including Nespresso's own</div>
+      <div class="row"><span class="k y">Status</span> Proposed architecture · to be detailed in discovery</div>
+      <div class="row"><span class="k">Sources</span> "Sobre a Blip" (Conversational Architecture); SG deck, Jul/2026; discovery and demo, Sep/2026</div>
+    </div>
+
+    <div class="section-title"><div class="eyebrow">Why Blip as the AI orchestration layer</div><h2 style="font-size:26px">Orchestrate what Nespresso already has — and what it will add.</h2></div>
+    <div class="pilares">
+      <div class="pil"><div class="num">01</div><h4>Middleware for the Intelligent Contact</h4><p>Blip sits between the consumer's messaging app and Nespresso's agents and systems — the brand's single conversational front door.</p></div>
+      <div class="pil"><div class="num">02</div><h4>Open protocols</h4><p>A2A and MCP connect agents and tools on both sides, so systems like Genesys, ERP or Braze plug in instead of being rebuilt.</p></div>
+      <div class="pil"><div class="num">03</div><h4>No model lock-in</h4><p>LLM-agnostic by design: each agent uses the model that fits the task, including Nespresso's own when relevant.</p></div>
+      <div class="pil"><div class="num">04</div><h4>From pilot to ROI</h4><p>95% of enterprise gen-AI pilots created no real business impact. Official Meta channels, one governed voice and measured journeys are how we avoid that.</p></div>
+    </div>
+    <div class="src-line"><b>Sources:</b> "Sobre a Blip" deck (Conversational Architecture: Agent Orchestrator, Agent Experts, MCP Connector, Human Agent with AI copilot; 95% statistic); SG deck, Jul/2026 (Blip architecture, Meta Premium Partner); discovery call and demo, Sep/2026 (Genesys, ERP, carriers, Braze, Engage, Nessoft).</div>
+    <div class="foot">Blip × Nespresso Singapore — supporting material · Classification: Confidential</div>
+  </section>
+</div>
+
+<!-- ================= NEXT STEPS ================= -->
+<div class="panel" id="panel-next">
+  <section class="container section-title">
+    <div class="eyebrow">Next steps</div>
+    <h2>An honest path: <span class="accent">what unlocks now, what comes next.</span></h2>
+    <p>Dates will be set together once scope and audience are confirmed. Go-live is targeted for Nespresso's next fiscal year.</p>
+  </section>
+  <section class="container">
+    <div class="fast">
+      <div class="fcard" style="border-color:var(--blip)"><div class="w" style="color:var(--blip-2)">Now · v1</div><h4>Align scope and launch the core</h4><ul>
+        <li><b>Nespresso SG × Nespresso Brazil</b> alignment on which journeys to replicate and which markets to cover</li>
+        <li><b>30-min follow-up</b> Blip × Nespresso SG</li>
+        <li><b>Technical discovery:</b> ERP/Nessoft, Genesys, payments, catalog</li>
+        <li><b>Proposal:</b> one-time set-up + platform minimum + per-conversation + dedicated expert team</li>
+        <li><b>Build:</b> Buy Capsules, Customer & Machine Support, Campaigns</li>
+      </ul></div>
+      <div class="fcard"><div class="w">Next · v2</div><h4>Connect fulfilment and expand</h4><ul>
+        <li>Order Tracking over the direct carrier integration</li>
+        <li>Repair Pickup, Buy Machines, Boutiques, Recycling</li>
+        <li>Campaigns triggered from Braze / Nespresso systems</li>
+        <li>Malaysia and Thailand, reusing the Singapore build</li>
+      </ul></div>
+      <div class="fcard"><div class="w">Later · v3</div><h4>Intelligence and loyalty</h4><ul>
+        <li>Specialised AI agents per domain</li>
+        <li>Behavioural segmentation and repurchase-window targeting</li>
+        <li>Loyalty journeys</li>
+        <li>Continuous optimisation with the Blip expert team</li>
+      </ul></div>
+    </div>
+
+    <div class="agreed" style="border-color:var(--line);background:linear-gradient(135deg,rgba(0,150,250,.06),transparent)">
+      <h4>Decisions pending on the Nespresso side</h4>
+      <ul>
+        <li><b>Scope:</b> which Brazil journeys to replicate, adapt or skip in v1</li>
+        <li><b>Markets:</b> Singapore only, or Singapore + Malaysia / Thailand</li>
+        <li><b>Campaign model:</b> sent from Blip, from Braze via API, or both</li>
+        <li><b>Operation:</b> who owns the channel day to day, and the Blip PS role</li>
+      </ul>
+    </div>
+
+    <div class="gaps">
+      <h4>Gaps · to validate</h4>
+      <ul>
+        <li><span class="tagx s">to validate</span>Audience size and volumes per market</li>
+        <li><span class="tagx s">to validate</span>ERP / Nessoft integration points and effort</li>
+        <li><span class="tagx s">to validate</span>Genesys handoff: data passed to the desk</li>
+        <li><span class="tagx s">to validate</span>Carrier / logistics API entry points</li>
+        <li><span class="tagx s">to validate</span>Local payment method and catalog set-up</li>
+        <li><span class="tagx s">to validate</span>Languages, PDPA and consent for campaigns</li>
+        <li><span class="tagx s">to validate</span>KPIs and success criteria for v1</li>
+        <li><span class="tagx s">to validate</span>Support model across the SG timezone</li>
+        <li><span class="tagx s">to validate</span>Contract framework: global vs local agreement</li>
+      </ul>
+    </div>
+    <div class="src-line"><b>Sources:</b> WhatsApp Demo – Blip, 24/09/2026 (next steps, pricing structure, go-live target, open items); Blip reply to the SG team, 18/09/2026 (timeline range, campaign roles); "Blip_Nespresso_Singapore_Premium" (PDPA, governance).</div>
+    <div class="foot">Blip × Nespresso Singapore — supporting material · Classification: Confidential</div>
+  </section>
+</div>
+
+<script>
+const tabs=document.querySelectorAll('.tab'),panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('active'));panels.forEach(p=>p.classList.remove('active'));t.classList.add('active');document.getElementById('panel-'+t.dataset.tab).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}));
+
+const caps=[
+ ['Entry','The consumer starts the conversation','From the website, a boutique QR code, an email or an ad — the consumer writes to the verified Nespresso account.',['Verified business account']],
+ ['Menu','The whole journey, one tap away','A list message opens the Brazil-proven menu: buy capsules or machines, machine support, order tracking, repair pickup, boutiques, promotions, recycling and support.',['List message','Up to 10 options']],
+ ['Intent','A clear intent, captured','The choice is recorded and the orchestrator routes the conversation to the Commerce agent.',['Routing','Context']],
+ ['Guide','A conversation, not a fixed menu','The bot asks the question a boutique specialist would: which machine system does the consumer use?',['Reply buttons (3)']],
+ ['Answer','One tap to answer','Original or Vertuo — the rest of the journey adapts to the system chosen.',['Personalisation']],
+ ['Discover','Browse ranges like in a boutique','A carousel shows collections, limited editions and a way to find coffees by intensity — as in the Brazil journey.',['Carousel','Up to 10 cards']],
+ ['Select','Pick a range','The consumer taps into a collection to see the individual coffees.',['Card button']],
+ ['Catalog','Products straight from the catalog','A multi-product message shows the coffees; the consumer builds the cart without leaving WhatsApp.',['Multi-product message','Catalog to validate']],
+ ['Cart','The order is sent','The cart goes back to Nespresso as a structured order — ready for the ERP / e-commerce.',['Native cart']],
+ ['Delivery','Delivery details in a WhatsApp Flow','A native form collects name, postal code, address, delivery option and preferred date — no external page.',['WhatsApp Flows','Form + radio + date']],
+ ['Pay','Secure payment in one tap','Order summary and a secure payment link. Brazil is evolving this step to keep payment inside the conversation.',['CTA URL button','Payment method to validate']],
+ ['Confirm','Confirmation arrives in the same chat','The payment status returns to the conversation, with an offer to set a reorder reminder and track the order.',['Status update','Reply buttons']],
+ ['Care','A human when it matters','A machine question hands the conversation to a Coffee Specialist on the Genesys desk, with the full context of the order.',['Human handoff','Genesys to validate']]
+];
+const N=caps.length;let mCur=1;
+const cap=document.getElementById('mockCap'),cnt=document.getElementById('mCount'),dots=document.getElementById('mDots'),body=document.getElementById('waBody');
+for(let i=1;i<=N;i++){const d=document.createElement('span');d.onclick=()=>{mCur=i;render();};dots.appendChild(d);}
+function render(){
+  document.querySelectorAll('#waBody [data-step]').forEach(el=>el.classList.toggle('show',+el.dataset.step<=mCur));
+  document.querySelectorAll('.flow-sheet').forEach(f=>f.classList.toggle('open', +f.dataset.open===mCur));
+  const c=caps[mCur-1];
+  cap.innerHTML=`<div class="k">Step ${mCur} · ${c[0]}</div><h4>${c[1]}</h4><p>${c[2]}</p><div class="feat">${c[3].map(x=>`<span class="tagx ${/validate/.test(x)?'s':'a'}">${x}</span>`).join('')}</div>`;
+  cnt.textContent=`Step ${mCur} of ${N}`;
+  [...dots.children].forEach((d,i)=>d.classList.toggle('on',i<mCur));
+  document.getElementById('mPrev').disabled=mCur===1;document.getElementById('mNext').disabled=mCur===N;
+  requestAnimationFrame(()=>{body.scrollTop=body.scrollHeight;});
+}
+document.getElementById('mNext').onclick=()=>{if(mCur<N){mCur++;render();}};
+document.getElementById('mPrev').onclick=()=>{if(mCur>1){mCur--;render();}};
+document.getElementById('mReset').onclick=()=>{mCur=1;render();};
+render();
+</script>
+</body>
+</html>
